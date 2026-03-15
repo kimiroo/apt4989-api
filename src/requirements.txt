@@ -1,0 +1,5 @@
+fastapi
+gunicorn
+jaydebeapi
+slack_bolt
+uvicorn
