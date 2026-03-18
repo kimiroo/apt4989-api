@@ -7,7 +7,7 @@ from lib.db import MDBManager
 
 router = APIRouter()
 
-@router.get('/complex/buildings')
+@router.get('/buildings')
 def get_building_names(
         complex: Annotated [
             str,
@@ -23,7 +23,7 @@ def get_building_names(
     ):
     # 1. Remove duplicates + trim + order by ascending
     sql = """
-        SELECT DISTINCT TRIM(S3)
+        SELECT DISTINCT TRIM(S3) AS NAME
         FROM MAIN
         WHERE S1 = ?
           AND S3 IS NOT NULL
@@ -33,6 +33,6 @@ def get_building_names(
     raw_results = mdb.query(sql, (complex,))
 
     # 2. convert to str list
-    building_names = [row['C1'] for row in raw_results if row.get('C1')]
+    building_names = [row['NAME'] for row in raw_results if row.get('NAME')]
 
     return building_names
