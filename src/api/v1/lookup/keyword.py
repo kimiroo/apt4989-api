@@ -39,21 +39,33 @@ def lookup_keyword(
                 max_length=20
             )
         ] = None,
+        listing_only: Annotated [
+            bool,
+            Query(
+                title='거래 상태만 검색',
+                description='매매, 전세, 월세 상태만 검색할지 여부'
+            )
+        ] = False,
         mdb: MDBManager = Depends(get_mdb)
     ):
 
-    # 1. Target columns
+    # 1. Common target columns
     target_columns = [
         'S17', # 매매
         'S18', # 전세
-        'S19', # 월세
-        'S25', # 확장
-        'S26', # 붙박이
-        'S28', # 상담
-        'S29', # 임대인
-        'S32', # 임차인
-        'S36'  # 비고
+        'S19'  # 월세
     ]
+
+    # Add target columns if not listing_only
+    if not listing_only:
+        target_columns.extend([
+            'S25', # 확장
+            'S26', # 붙박이
+            'S28', # 상담
+            'S29', # 임대인
+            'S32', # 임차인
+            'S36'  # 비고
+        ])
 
     # 2. Dynamic SQL query creation
     conditions = [f'TRIM({col}) LIKE ?' for col in target_columns]
