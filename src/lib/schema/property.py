@@ -11,8 +11,8 @@ class Property(BaseModel):
     bld: str = Field(..., alias='S3')
     unit: str = Field(..., alias='S4')
 
-    area: Optional[str] = Field(None, alias='S2')
-    type: Optional[str] = Field(None, alias='S5')
+    exclusive_area_square_meter: Optional[str] = Field(None, alias='S5')
+    total_area_pyeong: Optional[str] = Field(None, alias='S6')
 
     # Owner
     owner_name: Optional[str] = Field(None, alias='S29')
@@ -66,13 +66,7 @@ class Property(BaseModel):
         return self.expire_yy.strip()
 
     # Features
-    features_1: Optional[str] = Field(None, alias='S25')
-    features_2: Optional[str] = Field(None, alias='S26')
-
-    @property
-    def features(self) -> list:
-        # 인스턴스(self)의 실제 값들을 확인해서 리스트로 만듭니다.
-        return [v for v in [self.features_1, self.features_2] if v and v.strip()]
+    features: Optional[str] = Field(None, alias='S27')
 
     consult_log: Optional[str] = Field(None, alias='S28')
     remarks: Optional[str] = Field(None, alias='S36')

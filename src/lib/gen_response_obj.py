@@ -5,8 +5,10 @@ def gen_response_obj(property: Property):
         'complex': property.complex,
         'bld': property.bld,
         'unit': property.unit,
-        'area': property.area,
-        'type': property.type,
+        'area': {
+            'exclusiveSquareMeter': property.exclusive_area_square_meter,
+            'totalPyeong': property.total_area_pyeong
+        },
         'owner': {
             'name': property.owner_name,
             'number': property.owner_number
